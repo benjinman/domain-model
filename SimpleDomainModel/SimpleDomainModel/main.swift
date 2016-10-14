@@ -91,14 +91,24 @@ open class Job {
     public init(title : String, type : JobType) {
         self.title = title
         self.type = type
-        
     }
     
     open func calculateIncome(_ hours: Int) -> Int {
-        
+        switch self.type {
+        case .Hourly(let hourly):
+            return Int(hourly * Double(hours))
+        case .Salary(let annual):
+            return annual
+        }
     }
     
     open func raise(_ amt : Double) {
+        switch self.type {
+        case .Hourly(let hourly):
+            self.type = JobType.Hourly(hourly + amt)
+        case .Salary(let annual):
+            self.type = JobType.Salary(annual + Int(amt))
+        }
     }
 }
 /*

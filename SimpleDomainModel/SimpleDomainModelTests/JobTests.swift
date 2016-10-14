@@ -5,7 +5,7 @@
 //  Created by Ted Neward on 4/6/16.
 //  Copyright © 2016 Ted Neward. All rights reserved.
 //
-/*
+
 import XCTest
 
 import SimpleDomainModel
@@ -27,6 +27,7 @@ class JobTests: XCTestCase {
     XCTAssert(job.calculateIncome(50) == 1000)
     
     job.raise(1000)
+    print("\(job.calculateIncome(50))")
     XCTAssert(job.calculateIncome(50) == 2000)
   }
   
@@ -39,4 +40,4 @@ class JobTests: XCTestCase {
   }
   
 }
-*/
+
