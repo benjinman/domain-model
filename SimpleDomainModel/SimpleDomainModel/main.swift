@@ -27,7 +27,7 @@ public struct Money {
     public var amount : Int
     public var currency : String
     
-    public mutating func convert(_ to: String) -> Money {
+    public func convert(_ to: String) -> Money {
         let startingCurrency : String = self.currency
         var amountCopy : Int = self.amount
         
@@ -36,42 +36,46 @@ public struct Money {
                 if (startingCurrency == "GBP") {
                     amountCopy = amountCopy * 2
                 } else if (startingCurrency == "EUR") {
-                    amountCopy = amountCopy / 3 * 2
+                    amountCopy = amountCopy * 2 / 3
                 } else {
-                    amountCopy = amountCopy / 5 * 4
+                    amountCopy = amountCopy * 4 / 5
                 }
             }
             
-            if (to == "GBP") {
-                amountCopy = amountCopy / 2
-            } else if (startingCurrency == "EUR") {
-                amountCopy = amountCopy * 3 / 2
-            } else {
-                amountCopy = amountCopy * 5 / 4
+            if (to != "USD") {
+                if (to == "GBP") {
+                    amountCopy = amountCopy / 2
+                } else if (to == "EUR") {
+                    amountCopy = amountCopy * 3 / 2
+                } else {
+                    amountCopy = amountCopy * 5 / 4
+                }
             }
         }
-        self.amount = amountCopy
-        self.currency = to
+        /*self.amount = amountCopy
+        self.currency = to*/
         return Money(amount: amountCopy, currency: to)
     }
     
-    public mutating func add(_ to: Money) -> Money {
+    public func add(_ to: Money) -> Money {
+        var selfMoney = Money(amount: self.amount, currency: self.currency)
         if (to.currency != self.currency) {
-            self = convert(to.currency)
+            selfMoney = self.convert(to.currency)
         }
-        self.amount += to.amount
-        return Money(amount: self.amount, currency: self.currency)
+        selfMoney.amount += to.amount
+        return Money(amount: selfMoney.amount, currency: selfMoney.currency)
     }
     
-    public mutating func subtract(_ from: Money) -> Money {
+    public func subtract(_ from: Money) -> Money {
+        var selfMoney = Money(amount: self.amount, currency: self.currency)
         if (from.currency != self.currency) {
-            self = convert(from.currency)
+            selfMoney = convert(from.currency)
         }
-        self.amount -= from.amount
-        return Money(amount: self.amount, currency: self.currency)
+        selfMoney.amount -= from.amount
+        return Money(amount: selfMoney.amount, currency: selfMoney.currency)
     }
 }
-/*
+
 ////////////////////////////////////
 // Job
 //
@@ -85,6 +89,7 @@ open class Job {
     }
     
     public init(title : String, type : JobType) {
+        
     }
     
     open func calculateIncome(_ hours: Int) -> Int {
@@ -93,7 +98,7 @@ open class Job {
     open func raise(_ amt : Double) {
     }
 }
-
+/*
 ////////////////////////////////////
 // Person
 //
