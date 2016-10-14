@@ -69,7 +69,7 @@ public struct Money {
     public func subtract(_ from: Money) -> Money {
         var selfMoney = Money(amount: self.amount, currency: self.currency)
         if (from.currency != self.currency) {
-            selfMoney = convert(from.currency)
+            selfMoney = self.convert(from.currency)
         }
         selfMoney.amount -= from.amount
         return Money(amount: selfMoney.amount, currency: selfMoney.currency)
@@ -89,10 +89,13 @@ open class Job {
     }
     
     public init(title : String, type : JobType) {
+        self.title = title
+        self.type = type
         
     }
     
     open func calculateIncome(_ hours: Int) -> Int {
+        
     }
     
     open func raise(_ amt : Double) {
